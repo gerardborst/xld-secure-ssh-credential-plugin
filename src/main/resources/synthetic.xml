@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS
+    FOR A PARTICULAR PURPOSE. THIS CODE AND INFORMATION ARE NOT SUPPORTED BY XEBIALABS.
+
+-->
+<synthetic xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns="http://www.xebialabs.com/deployit/synthetic"
+           xsi:schemaLocation="http://www.xebialabs.com/deployit/synthetic synthetic.xsd">
+
+    <type-modification type="overthere.SecureRemoteHost" >
+        <property name="connectionTimeoutMillis" category="Advanced" kind="integer" default="120000" hidden="true"
+                  description="Number of milliseconds Overthere waits for a connection to a remote host to be established"/>
+        <property name="jumpstation" category="Advanced" kind="ci" required="false" referenced-type="overthere.Jumpstation"
+                  description="Jumpstation that should be used to reach this host"/>
+    </type-modification>
+
+    <type-modification type="overthere.SecureSshHost">
+        <property name="protocol" default="ssh" hidden="true"/>
+
+        <property name="connectionType" kind="enum" enum-class="com.xebialabs.overthere.ssh.SshConnectionType" required="true" default="SFTP"
+                  description="Type of SSH connection to create"/>
+        <property name="address" kind="string" required="true" description="Address of the host"/>
+        <property name="port" kind="integer" required="true" default="22" description="Port on which the SSH server runs"/>
+        <property name="allocateDefaultPty" category="Advanced" kind="boolean" required="false" default="false" hidden="true"
+                  description="If true, a default PTY (dummy:80:24:0:0) is allocated when executing a command"/>
+        <property name="allocatePty" category="Advanced" kind="string" required="false" hidden="true"
+                  description="Specification for the PTY to be allocated when executing a command. The format is TERM:COLS:ROWS:WIDTH:HEIGHT, e.g. xterm:80:24:0:0"/>
+        <property name="interactiveKeyboardAuthRegex" category="Advanced" kind="string" default=".*Password:[ ]?" hidden="true"
+                  description="Regular expression to look for in keyboard-interactive authentication before sending the password"/>
+
+        <property name="sudoUsername" category="Advanced" kind="string" required="false"
+                  label="SUDO username" description="Username to sudo to when accessing files or executing commands"/>
+        <property name="sudoCommandPrefix" category="Advanced" kind="string" default="sudo -u {0}" hidden="true"
+                  description="Sudo command to prefix to the original command. The placeholder {0} is replaced with the sudoUsername"/>
+        <property name="sudoQuoteCommand" category="Advanced" kind="boolean" required="false" default="false" hidden="true"
+                  description="If true, the original command is quoted when it is prefixed with sudoCommandPrefix"/>
+        <property name="sudoPreserveAttributesOnCopyFromTempFile" category="Advanced" kind="boolean" required="false" default="true" hidden="true"
+                  description="If true, files are copied from the connection temporary directory using the -p flag to the cp command"/>
+        <property name="sudoPreserveAttributesOnCopyToTempFile" category="Advanced" kind="boolean" required="false" default="true" hidden="true"
+                  description="If true, files are copied to the connection temporary directory using the -p flag to the cp command"/>
+        <property name="sudoPasswordPromptRegex" category="Advanced" kind="string" default=".*[Pp]assword.*:" hidden="true"
+                  description="Regular expression to look for in interactive sudo before sending the password"/>
+        <property name="sudoOverrideUmask" category="Advanced" kind="boolean" required="false" default="true" hidden="true"
+                  description="If true, permissions are explicitly changed with chmod -R go+rX after uploading a file or directory"/>
+
+        <property name="suUsername" category="Advanced" kind="string" required="false"
+                  label="SU username" description="Username to su to when accessing files or executing commands"/>
+        <property name="suPassword" category="Advanced" kind="string" required="false" password="true"
+                  label="SU password" description="Password of user to su to when accessing files or executing commands"/>
+        <property name="suCommandPrefix" category="Advanced" kind="string" default="su - {0} -c" hidden="true"
+                  description="Su command to prefix to the original command. The placeholder {0} is replaced with the sudoUsername"/>
+        <property name="suQuoteCommand" category="Advanced" kind="boolean" required="false" default="true" hidden="true"
+                  description="If true, the original command is quoted when it is prefixed with suCommandPrefix"/>
+        <property name="suPreserveAttributesOnCopyFromTempFile" category="Advanced" kind="boolean" required="false" default="true" hidden="true"
+                  description="If true, files are copied from the connection temporary directory using the -p flag to the cp command"/>
+        <property name="suPreserveAttributesOnCopyToTempFile" category="Advanced" kind="boolean" required="false" default="true" hidden="true"
+                  description="If true, files are copied to the connection temporary directory using the -p flag to the cp command"/>
+        <property name="suPasswordPromptRegex" category="Advanced" kind="string" default=".*[Pp]assword.*:" hidden="true"
+                  description="Regular expression to look for before sending the password"/>
+        <property name="suOverrideUmask" category="Advanced" kind="boolean" required="false" default="true" hidden="true"
+                  description="If true, permissions are explicitly changed with chmod -R go+rX after uploading a file or directory"/>
+    </type-modification>
+
+</synthetic>

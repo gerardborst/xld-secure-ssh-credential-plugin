@@ -1,0 +1,9 @@
+version: '2'
+
+services:
+# --- TOMCAT ---
+  tomcat:
+    image: gerardborst/xld-tomcat-test:9.0.10-1
+    ports:
+     - "2022:22"
+     - "8080:8080"
